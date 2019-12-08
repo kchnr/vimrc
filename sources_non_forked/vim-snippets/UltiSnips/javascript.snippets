@@ -136,8 +136,9 @@ endsnippet
 
 snippet case "case 'xyz': ... break"
 case`!p snip.rv = keyword_spacing(snip)`'${VISUAL}${1:case}':
-	${VISUAL}$0
+	${VISUAL}${2}
 	break`!p snip.rv = semi(snip)`
+	${0}
 endsnippet
 
 snippet do "do { ... } while (condition)"
