@@ -21,7 +21,7 @@ Plug 'Quramy/tsuquyomi'
 Plug 'w0rp/ale'
 
 " Colors
-Plug 'lifepillar/vim-solarized8'
+Plug 'vim-scripts/peaksea'
 Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
 
@@ -146,33 +146,27 @@ endif
 
 
 " Add a bit extra margin to the left
-set foldcolumn=1
-
+set foldcolumn=0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set guioptions-=r
+set guioptions-=R
+set guioptions-=l
+set guioptions-=L
+
 " Enable syntax highlighting
 syntax enable 
-
-" Set extra options when running in GUI mode
-if has("gui_running")
-    set guioptions-=T
-    set guioptions-=e
-    set guitablabel=%M\ %t
-endif
+set termguicolors
+set background=dark
+colorscheme peaksea
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
-
-" Colorscheme
-syntax on
-set termguicolors
-set background=dark
-colorscheme solarized8_high
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Status line
@@ -423,18 +417,6 @@ function! JavaScriptFold()
     endfunction
     setl foldtext=FoldText()
 endfunction
-
-""""""""""""""""""""""""""""""
-" => Shell section
-""""""""""""""""""""""""""""""
-if exists('$TMUX') 
-    if has('nvim')
-        set termguicolors
-    else
-        set term=screen-256color 
-    endif
-endif
-
 
 """"""""""""""""""""""""""""""
 " => Markdown
