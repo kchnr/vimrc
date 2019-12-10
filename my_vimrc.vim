@@ -1,37 +1,58 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: 
-"       Amir Salihefendic — @amix3k
-"
-" Awesome_version:
-"       Get this config, nice color schemes and lots of plugins!
-"
-"       Install the awesome version from:
-"
-"           https://github.com/amix/vimrc
-"
-" Sections:
-"    -> General
-"    -> VIM user interface
-"    -> Colors and Fonts
-"    -> Files and backups
-"    -> Text, tab and indent related
-"    -> Visual mode related
-"    -> Moving around, tabs and buffers
-"    -> Status line
-"    -> Editing mappings
-"    -> vimgrep searching and cope displaying
-"    -> Spell checking
-"    -> Misc
-"    -> Helper functions
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" remove all existing autocmds
+autocmd!
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" initialize plugins
+call plug#begin('~/.vim_runtime/plugged')
+
+" JSX/HTM support
+Plug 'MaxMEllon/vim-jsx-pretty'
+
+" JS
+Plug 'pangloss/vim-javascript'
+
+" TypeScript highlighting/indent
+Plug 'leafgarland/typescript-vim'
+
+" TypeScript semantic support
+Plug 'Quramy/tsuquyomi'
+Plug 'w0rp/ale'
+
+" Colors
+Plug 'lifepillar/vim-solarized8'
+Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
+
+" Snippets
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'garbas/vim-snipmate'
+Plug 'tomtom/tlib_vim'
+Plug 'honza/vim-snippets'
+
+" Fuzzy finder
+Plug 'kien/ctrlp.vim'
+
+" File searcher
+Plug 'mileszs/ack.vim'
+
+" Navigation
+Plug 'jlanzarotta/bufexplorer'
+
+" Editing
+Plug 'tpope/vim-surround'
+Plug 'terryma/vim-multiple-cursors'
+
+call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sets how many lines of history VIM has to remember
-set history=500
+set history=10000
+
+set number
 
 " Enable filetype plugins
 filetype plugin on
@@ -134,23 +155,10 @@ set foldcolumn=1
 " Enable syntax highlighting
 syntax enable 
 
-" Enable 256 colors palette in Gnome Terminal
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
-
-try
-    colorscheme desert
-catch
-endtry
-
-set background=dark
-
 " Set extra options when running in GUI mode
 if has("gui_running")
     set guioptions-=T
     set guioptions-=e
-    set t_Co=256
     set guitablabel=%M\ %t
 endif
 
@@ -160,6 +168,16 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
+" Colorscheme
+syntax on
+set termguicolors
+set background=dark
+colorscheme solarized8_high
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Status line
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -168,7 +186,6 @@ set ffs=unix,dos,mac
 set nobackup
 set nowb
 set noswapfile
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
@@ -255,16 +272,6 @@ endtry
 
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
-
-""""""""""""""""""""""""""""""
-" => Status line
-""""""""""""""""""""""""""""""
-" Always show the status line
-set laststatus=2
-
-" Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -433,20 +440,6 @@ endif
 " => Markdown
 """"""""""""""""""""""""""""""
 let vim_markdown_folding_disabled = 1
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Important:
-"       This requires that you install https://github.com/amix/vimrc !
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-""""""""""""""""""""""""""""""
-" => Load pathogen paths
-""""""""""""""""""""""""""""""
-let s:vim_runtime = expand('<sfile>:p:h')."/.."
-call pathogen#infect(s:vim_runtime.'/sources_forked/{}')
-call pathogen#infect(s:vim_runtime.'/sources_non_forked/{}')
-call pathogen#helptags()
-
 
 """"""""""""""""""""""""""""""
 " => bufExplorer plugin
@@ -579,18 +572,6 @@ let g:ale_lint_on_enter = 0
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Git gutter (Git diff)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:gitgutter_enabled=0
-nnoremap <silent> <leader>d :GitGutterToggle<cr>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Important: 
-"       This requries that you install https://github.com/amix/vimrc !
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => GUI related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set font according to system
@@ -606,22 +587,18 @@ elseif has("unix")
     set gfn=Monospace\ 11
 endif
 
-" Disable scrollbars (real hackers don't use scrollbars for navigation!)
+" Disable scrollbars
 set guioptions-=r
 set guioptions-=R
 set guioptions-=l
 set guioptions-=L
 
-" Colorscheme
-set background=dark
-colorscheme peaksea
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>e :e! ~/.vim_runtime/vimrcs/my_vimrc.vim<cr>
-autocmd! bufwritepost ~/.vim_runtime/vimrcs/my_vimrc.vim source ~/.vim_runtime/vimrcs/my_vimrc.vim
+map <leader>e :e! ~/.vim_runtime/my_vimrc.vim<cr>
+autocmd! bufwritepost ~/.vim_runtime/my_vimrc.vim source ~/.vim_runtime/my_vimrc.vim
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
