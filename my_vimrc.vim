@@ -13,6 +13,11 @@ Plug 'MaxMEllon/vim-jsx-pretty'
 " JS
 Plug 'pangloss/vim-javascript'
 
+" Clojure
+Plug 'guns/vim-sexp'
+Plug 'tpope/vim-sexp-mappings-for-regular-people' 
+Plug 'kien/rainbow_parentheses.vim'
+
 " TypeScript highlighting/indent
 Plug 'leafgarland/typescript-vim'
 
